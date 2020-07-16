@@ -23,7 +23,20 @@ public class ProductTests extends BaseTest {
 
     @Test
     public void CheckProductPrice(){
-        Assert.assertEquals(getDriver().findElement(By.id("priceblock_ourprice")).getText(),
+        ProductPage kindlePage=new ProductPage(getDriver());
+        Assert.assertEquals(kindlePage.getProductPrice(),
                 "$79.99");
+    }
+
+    @Test
+    public void CheckAProductCanBeAddedToCart(){
+        ProductPage kindlePage=new ProductPage(getDriver());
+        String priceBeforeCover = kindlePage.getProductPrice();
+        kindlePage.addCovertoOrder();
+        kindlePage.clickAddToCartBttn();
+        Assert.assertNotEquals(priceBeforeCover, kindlePage.getSubTotal());
+        System.out.println("Price before cover: " + priceBeforeCover + "\n"
+                         + "Price after cover: " + kindlePage.getSubTotal());
+
     }
 }
