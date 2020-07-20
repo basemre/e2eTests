@@ -11,7 +11,7 @@ public class ProductTests extends BaseTest {
 
     @BeforeTest
     public void SetUp(){
-
+        
         getDriver().get("https://www.amazon.com/All-new-Kindle-Built-Front-Light/dp/B07HSJKS3S/ref=sr_1_2?dchild=1&keywords=kindle&qid=1594321759&sr=8-2");
     }
 
@@ -21,11 +21,11 @@ public class ProductTests extends BaseTest {
         simpleProductPage.waitForElementUntilAppear(By.id("buy-now-button"));
     }
 
-    @Test
-    public void CheckProductPrice(){
+    @Test(dataProvider = "productPages")
+    public void CheckProductPrice(String productPageLink, String productPrice){
         ProductPage kindlePage=new ProductPage(getDriver());
-        Assert.assertEquals(kindlePage.getProductPrice(),
-                "$79.99");
+        getDriver().get(productPageLink);
+        Assert.assertEquals(kindlePage.getProductPrice(), productPrice);
     }
 
     @Test
